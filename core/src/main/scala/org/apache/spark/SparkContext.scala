@@ -188,10 +188,10 @@ class SparkContext(config: SparkConf) extends Logging {
 
   // log out Spark Version in Spark driver log
   logInfo(s"Running Spark version $SPARK_VERSION")
-  val confInfo = GraphLayout.parseInstance(config).toPrintable();
-  logInfo(confInfo);
-
-  /* ------------------------------------------------------------------------------------- *
+  val confInfo = GraphLayout.parseInstance(_conf).toPrintable()
+  logInfo(confInfo)
+  logInfo("memory layout printed")
+      * ------------------------------------------------------------------------------------- *
    | Private variables. These variables keep the internal state of the context, and are    |
    | not accessible by the outside world. They're mutable since we want to initialize all  |
    | of them to some neutral value ahead of time, so that calling "stop()" while the       |
