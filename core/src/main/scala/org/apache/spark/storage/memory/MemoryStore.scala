@@ -154,6 +154,10 @@ private[spark] class MemoryStore(
       entries.synchronized {
         entries.put(blockId, entry)
       }
+      logInfo("memory layout printing")
+      val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
+      logInfo(entryInfo)
+      logInfo("memory layout printed")
       logInfo("Block %s stored as bytes in memory (estimated size %s, free %s)".format(
         blockId, Utils.bytesToString(size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
       true
@@ -263,6 +267,11 @@ private[spark] class MemoryStore(
         entries.synchronized {
           entries.put(blockId, entry)
         }
+
+        logInfo("memory layout printing")
+        val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
+        logInfo(entryInfo)
+        logInfo("memory layout printed")
 
         logInfo("Block %s stored as values in memory (estimated size %s, free %s)".format(blockId,
           Utils.bytesToString(entry.size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))

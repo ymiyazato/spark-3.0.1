@@ -2091,10 +2091,6 @@ class SparkContext(config: SparkConf) extends Logging {
     }
     val callSite = getCallSite
     val cleanedFunc = clean(func)
-    logInfo("memory layout printing")
-    val rddInfo = GraphLayout.parseInstance(callSite).toPrintable()
-    logInfo(rddInfo)
-    logInfo("memory layout printed")
     logInfo("Starting job: " + callSite.shortForm)
     if (conf.getBoolean("spark.logLineage", false)) {
       logInfo("RDD's recursive dependencies:\n" + rdd.toDebugString)
