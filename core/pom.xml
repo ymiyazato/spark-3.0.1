@@ -451,6 +451,14 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-crypto</artifactId>
     </dependency>
+    <!--
+      JOL dependency by ymiyazato
+     -->
+    <dependency>
+      <groupId>org.openjdk.jol</groupId>
+      <artifactId>jol-core</artifactId>
+      <version>0.14</version>
+    </dependency>
 
   </dependencies>
   <build>
