@@ -188,9 +188,7 @@ class SparkContext(config: SparkConf) extends Logging {
 
   // log out Spark Version in Spark driver log
   logInfo(s"Running Spark version $SPARK_VERSION")
-  val confInfo = GraphLayout.parseInstance(_conf).toPrintable()
-  logInfo(confInfo)
-  logInfo("memory layout printed")
+
       * ------------------------------------------------------------------------------------- *
    | Private variables. These variables keep the internal state of the context, and are    |
    | not accessible by the outside world. They're mutable since we want to initialize all  |
@@ -2093,6 +2091,9 @@ class SparkContext(config: SparkConf) extends Logging {
     }
     val callSite = getCallSite
     val cleanedFunc = clean(func)
+    val rddInfo = GraphLayout.parseInstance(rdd).toPrintable()
+    logInfo(rddInfo)
+    logInfo("memory layout printed")
     logInfo("Starting job: " + callSite.shortForm)
     if (conf.getBoolean("spark.logLineage", false)) {
       logInfo("RDD's recursive dependencies:\n" + rdd.toDebugString)
