@@ -38,6 +38,7 @@ import org.apache.spark.unsafe.array.ByteArrayMethods
 import org.apache.spark.util.{SizeEstimator, Utils}
 import org.apache.spark.util.collection.SizeTrackingVector
 import org.apache.spark.util.io.{ChunkedByteBuffer, ChunkedByteBufferOutputStream}
+import org.openjdk.jol.info.GraphLayout
 
 private sealed trait MemoryEntry[T] {
   def size: Long
