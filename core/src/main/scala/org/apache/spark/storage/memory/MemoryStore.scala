@@ -156,8 +156,9 @@ private[spark] class MemoryStore(
         entries.put(blockId, entry)
       }
       logInfo("memory layout printing")
-      val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
-      logInfo(entryInfo)
+      //val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
+      //logInfo(entryInfo)
+      GraphLayout.parseInstance(entries).toImage("/home/ymiyazato/Graph.png");
       logInfo("memory layout printed")
       logInfo("Block %s stored as bytes in memory (estimated size %s, free %s)".format(
         blockId, Utils.bytesToString(size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
