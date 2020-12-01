@@ -3,7 +3,7 @@ package org.apache.spark.storage
 import org.apache.spark.storage.memory._
 import org.apache.spark.internal.Logging
 
-private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging with Runnbale{
+private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging with Runnable{
   val count = 0
   var running = true
   def run() = {
