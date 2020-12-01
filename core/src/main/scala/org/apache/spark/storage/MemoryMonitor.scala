@@ -22,7 +22,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     val memoryMap = memoryStore.getAddrAndSize()
     logInfo(s"entry num = ${memoryMap.size}")
     for ((addr, size) <- memoryMap){
-      logInfo(s"${count} : ${size}")
+      logInfo(s"${addr} : ${size}")
     }
   }
 
