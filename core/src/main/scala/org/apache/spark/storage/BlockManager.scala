@@ -203,7 +203,8 @@ private[spark] class BlockManager(
   memoryManager.setMemoryStore(memoryStore)
 
   //start memory monitor thread
-  private[spark] val memoryMonitorThread = new Thread(new MemoryMonitor(memoryStore))
+  private[spark] val memoryMonitor = new MemoryMonitor(memoryStore)
+  private[spark] val memoryMonitorThread = new Thread(memoryMonitor)
   memoryMonitorThread.start
 
   // Note: depending on the memory manager, `maxMemory` may actually vary over time.
@@ -1843,7 +1844,7 @@ private[spark] class BlockManager(
     futureExecutionContext.shutdownNow()
 
     //stop memory monitor thread
-    memoryMonitorThread.stopRunning()
+    memoryMonitor.stopRunning()
 
     logInfo("BlockManager stopped")
   }
