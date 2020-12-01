@@ -640,7 +640,7 @@ private[spark] class MemoryStore(
    * get memory layout entries
    *
    */
-  def getAddrAndSize(): mutable.HashMap[Long, Long] ={
+  def getAddrAndSize(): Unit ={
     logInfo("start memory layout printing")
     val entryInfo = ClassLayout.parseInstance(entries).toPrintable()
     logInfo(entryInfo)
