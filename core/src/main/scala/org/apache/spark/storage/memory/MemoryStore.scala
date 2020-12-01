@@ -642,14 +642,15 @@ private[spark] class MemoryStore(
    *
    */
   def getAddrAndSize(): mutable.HashMap[Long, Long] = {
-    logInfo("start memory layout printing")
+//    logInfo("start memory layout printing")
 //    val entryInfo = ClassLayout.parseInstance(entries).toPrintable()
 //    logInfo(entryInfo)
-  val entriesInfo = mutable.HashMap[Long, Long]()
+//    logInfo("end memory layout printing")
+    val entriesInfo = mutable.HashMap[Long, Long]()
     for (addr <- GraphLayout.parseInstance(entries).addresses().asScala) {
       entriesInfo.put(addr, GraphLayout.getSize(addr))
     }
-    logInfo("end memory layout printing")
+
     entriesInfo
   }
 }
