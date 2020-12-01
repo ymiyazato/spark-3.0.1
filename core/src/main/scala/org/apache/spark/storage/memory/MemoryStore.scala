@@ -38,6 +38,7 @@ import org.apache.spark.unsafe.array.ByteArrayMethods
 import org.apache.spark.util.{SizeEstimator, Utils}
 import org.apache.spark.util.collection.SizeTrackingVector
 import org.apache.spark.util.io.{ChunkedByteBuffer, ChunkedByteBufferOutputStream}
+import org.openjdk.jol.info.ClassLayout
 import org.openjdk.jol.info.GraphLayout
 
 private sealed trait MemoryEntry[T] {
@@ -155,11 +156,7 @@ private[spark] class MemoryStore(
       entries.synchronized {
         entries.put(blockId, entry)
       }
-      logInfo("memory layout printing")
-      //val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
-      //logInfo(entryInfo)
-      GraphLayout.parseInstance(entries).toImage("/home/ymiyazato/Graph.png");
-      logInfo("memory layout printed")
+      //getAddrAndSize()
       logInfo("Block %s stored as bytes in memory (estimated size %s, free %s)".format(
         blockId, Utils.bytesToString(size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
       true
@@ -269,13 +266,7 @@ private[spark] class MemoryStore(
         entries.synchronized {
           entries.put(blockId, entry)
         }
-
-        logInfo("memory layout printing")
-        //val entryInfo = GraphLayout.parseInstance(entries).toPrintable()
-        //logInfo(entryInfo)
-        GraphLayout.parseInstance(entries).toImage("/home/ymiyazato/Graph.png");
-        logInfo("memory layout printed")
-
+        //getAddrAndSize()
         logInfo("Block %s stored as values in memory (estimated size %s, free %s)".format(blockId,
           Utils.bytesToString(entry.size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
         Right(entry.size)
@@ -644,6 +635,21 @@ private[spark] class MemoryStore(
       s"(computed ${Utils.bytesToString(finalVectorSize)} so far)"
     )
     logMemoryUsage()
+  }
+  /**
+   * get memory layout entries
+   *
+   */
+  def getAddrAndSize(): mutable.HashMap[Long, Long] ={
+    logInfo("start memory layout printing")
+    val entryInfo = ClassLayout.parseInstance(entries).toPrintable()
+    logInfo(entryInfo)
+    logInfo("end memory layout printing")
+    val entriesInfo = mutable.HashMap[Long, Long]()
+    for (long addr : GraphLayout.addresses()) {
+      entriesInfo.put(addr, GraphLayout.getSize(addr))
+    }
+
   }
 }
 

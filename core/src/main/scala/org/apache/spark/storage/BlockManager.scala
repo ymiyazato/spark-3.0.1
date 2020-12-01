@@ -202,6 +202,10 @@ private[spark] class BlockManager(
   private[spark] val diskStore = new DiskStore(conf, diskBlockManager, securityManager)
   memoryManager.setMemoryStore(memoryStore)
 
+  //start memory monitor thread
+  private[spark] val memoryMonitorThread = new Thread(new MemoryMonitor(MemoryStore))
+  memoryMonitorThread.start
+
   // Note: depending on the memory manager, `maxMemory` may actually vary over time.
   // However, since we use this only for reporting and logging, what we actually want here is
   // the absolute maximum value that `maxMemory` can ever possibly reach. We may need
@@ -1837,6 +1841,10 @@ private[spark] class BlockManager(
     blockInfoManager.clear()
     memoryStore.clear()
     futureExecutionContext.shutdownNow()
+
+    //stop memory monitor thread
+    memoryMonitorThread.stopRunning()
+
     logInfo("BlockManager stopped")
   }
 }
