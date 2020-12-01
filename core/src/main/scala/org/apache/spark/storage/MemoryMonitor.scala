@@ -9,6 +9,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
   def run() = {
     while (running) {
       logInfo(s"ymiyazato monitor test ${count}")
+      scanMemoryEntries()
       count = count + 1
       Thread.sleep(10000)
     }
