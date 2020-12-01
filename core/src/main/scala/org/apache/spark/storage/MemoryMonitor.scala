@@ -17,4 +17,8 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     running = false
   }
 
+  def scanMemoryEntries(): Unit = {
+
+  }
+
 }
