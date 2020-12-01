@@ -18,8 +18,9 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
   }
 
   def scanMemoryEntries(): Unit = {
-    logInfo(s"entry num = ${memoryStore.size}")
-    for ((addr, size) <- memoryStore.getAddrAndSize()){
+    val memoryMap = memoryStore.getAddrAndSize()
+    logInfo(s"entry num = ${memoryMap.size}")
+    for ((addr, size) <- memoryMap){
       logInfo(s"${count} : ${size}")
     }
   }
