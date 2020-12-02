@@ -157,7 +157,7 @@ private[spark] class MemoryStore(
       entries.synchronized {
         entries.put(blockId, entry)
       }
-      getAddrAndSize()
+      //getAddrAndSize()
       logInfo("Block %s stored as bytes in memory (estimated size %s, free %s)".format(
         blockId, Utils.bytesToString(size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
       true
@@ -267,7 +267,7 @@ private[spark] class MemoryStore(
         entries.synchronized {
           entries.put(blockId, entry)
         }
-        getAddrAndSize()
+        //getAddrAndSize()
         logInfo("Block %s stored as values in memory (estimated size %s, free %s)".format(blockId,
           Utils.bytesToString(entry.size), Utils.bytesToString(maxMemory - blocksMemoryUsed)))
         Right(entry.size)
@@ -641,15 +641,15 @@ private[spark] class MemoryStore(
    * get memory layout entries
    *
    */
-  def getAddrAndSize(): mutable.HashMap[Long, Long] = {
+  def getAddrAndSize(): List[(Long, Long)] = {
 //    logInfo("start memory layout printing")
 //    val entryInfo = ClassLayout.parseInstance(entries).toPrintable()
 //    logInfo(entryInfo)
 //    logInfo("end memory layout printing")
-    val entriesInfo = mutable.HashMap[Long, Long]()
+    var entriesInfo : List[(Long, Long)] = List.empty
     val graphLayout = GraphLayout.parseInstance(entries)
     for (addr <- graphLayout.addresses().asScala) {
-      entriesInfo.put(addr, graphLayout.getSize(addr))
+      entriesInfo = entriesInfo +: (addr, graphLayout.getSize(addr))
     }
     entriesInfo
   }
