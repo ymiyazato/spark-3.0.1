@@ -24,6 +24,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     val threshHold : Double= 0.7
     var addresses : Array[Long] = Array.empty
     val memoryMap = memoryStore.getAddrAndSize()
+    val jni = new JniWrapper()
 
     logInfo(s"entry num = ${memoryMap.size}")
 
@@ -64,7 +65,9 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     logInfo(s"huge page num = ${addresses.size}")
     for (addr <- addresses){
       logInfo(s"huge page address = ${addr}")
+      jni.madvise(addr, hugePageSize)
     }
+
   }
 
 }
