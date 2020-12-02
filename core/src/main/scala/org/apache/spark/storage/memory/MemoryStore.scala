@@ -648,7 +648,7 @@ private[spark] class MemoryStore(
 //    logInfo("end memory layout printing")
     var entriesInfo : List[(Long, Long)] = List.empty
     val graphLayout = GraphLayout.parseInstance(entries)
-    for (addr <- graphLayout.addresses().asScala) {
+    for (addr : Long <- graphLayout.addresses().asScala) {
       entriesInfo = entriesInfo :+ (addr, graphLayout.getSize(addr))
     }
     entriesInfo
