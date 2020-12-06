@@ -6,14 +6,5 @@ public class JniWrapper {
     static {
         System.loadLibrary(LIB_NAME);
     }
-
-    public native long setBytes(byte[] bytes);
-
-    public native byte[] getBytes(long id);
-
-    public native void freeBytes(long id);
-
-    public native byte getByte(long addr);
-
-    public native boolean madvise(long addr, long size);
+    public native int madvise(long addr, long size);
 }

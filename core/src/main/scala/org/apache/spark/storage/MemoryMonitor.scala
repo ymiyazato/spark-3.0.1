@@ -63,9 +63,11 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
       addresses = addresses :+ pageStartAddr
     }
     logInfo(s"huge page num = ${addresses.size}")
-    for (addr <- addresses){
+    for (addr : Long <- addresses){
       logInfo(s"huge page address = ${addr}")
-      jni.madvise(addr, hugePageSize)
+      if (jni.madvise(addr, hugePageSize) < 0){
+        logInfo(s"madvise failed")
+      }
     }
 
   }
