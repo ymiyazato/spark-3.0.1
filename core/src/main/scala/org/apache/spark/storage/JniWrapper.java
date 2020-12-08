@@ -1,7 +1,7 @@
 package org.apache.spark.storage;
 import org.apache.spark.internal.Logging;
 
-public class JniWrapper extends Logging{
+public class JniWrapper{
 //    final private static String LIB_NAME = "jnilibrary";
 //
 //    static {
@@ -9,7 +9,7 @@ public class JniWrapper extends Logging{
 //    }
     private native int madvise(long addr, long size);
     public int call_madvise(long addr, long size) {
-        logInfo("start call madvise in jniwrapper");
+        System.out.println("call madvise in jniwrapper");
         return (madvise(addr, size));
     }
 }
