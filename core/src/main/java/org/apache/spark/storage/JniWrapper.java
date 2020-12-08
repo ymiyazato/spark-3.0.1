@@ -6,10 +6,9 @@ public class JniWrapper{
 //    static {
 //        System.loadLibrary(LIB_NAME);
 //    }
-    private native int mymadvise(long addr, long size);
-    private native int returnzero(long startAddr, long hugePageSize);
+    private native int myMadvise(long startAddr, long hugePageSize);
     public int call_madvise(long startAddr, long hugePageSize) {
-        System.out.println("call madvise by madvise");
-        return (returnzero(startAddr, hugePageSize));
+        //System.out.println("call madvise by madvise");
+        return (myMadvise(startAddr, hugePageSize));
     }
 }
