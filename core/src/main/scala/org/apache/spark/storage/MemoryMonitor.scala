@@ -25,7 +25,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     var addresses : Array[Long] = Array.empty
     val memoryMap = memoryStore.getAddrAndSize()
     val jni = new JniWrapper()
-
+    System.loadLibrary("jnilibrary")
     logInfo(s"entry num = ${memoryMap.size}")
 
     var pageStartAddr : Long = -1L
@@ -65,7 +65,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
     logInfo(s"huge page num = ${addresses.size}")
     for (addr : Long <- addresses){
       logInfo(s"huge page address = ${addr}")
-      if (jni.madvise(addr, hugePageSize) < 0){
+      if (jni.call_madvise(addr, hugePageSize) < 0){
         logInfo(s"madvise failed")
       }
     }
