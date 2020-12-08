@@ -1,5 +1,4 @@
 package org.apache.spark.storage;
-import org.apache.spark.internal.Logging;
 
 public class JniWrapper{
 //    final private static String LIB_NAME = "jnilibrary";
