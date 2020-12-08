@@ -649,6 +649,7 @@ private[spark] class MemoryStore(
     var entriesInfo : List[(Long, Long)] = List.empty
     val graphLayout = GraphLayout.parseInstance(entries)
     for (addr <- graphLayout.addresses().asScala) {
+      loginfo(s"addr = ${addr}")
       entriesInfo = entriesInfo :+ (addr.toLong, graphLayout.getSize(addr))
     }
     entriesInfo
