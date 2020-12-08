@@ -8,8 +8,8 @@ public class JniWrapper extends Logging{
 //        System.loadLibrary(LIB_NAME);
 //    }
     private native int madvise(long addr, long size);
-    public int call_madvise(long addr, long size){
-        logInfo(s"start call madvise in jniwrapper");
+    public int call_madvise(long addr, long size) {
+        logInfo("start call madvise in jniwrapper");
         return (madvise(addr, size));
     }
 }
