@@ -10,6 +10,6 @@ public class JniWrapper{
     private native int returnzero();
     public int call_madvise(long addr, long size) {
         System.out.println("call madvise by madvise");
-        return (madvise(addr, size));
+        return (returnzero());
     }
 }
