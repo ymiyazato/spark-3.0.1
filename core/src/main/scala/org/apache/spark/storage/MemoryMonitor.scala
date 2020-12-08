@@ -69,7 +69,7 @@ private[spark] class MemoryMonitor(memoryStore : MemoryStore) extends Logging wi
       if (tmp < 0){
         logInfo(s"madvise failed")
       }
-      logInfo(s"huge page address = ${tmp}")
+      //logInfo(s"huge page address = ${tmp}")
     }
 
   }
